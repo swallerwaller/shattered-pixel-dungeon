@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
+package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.cursed;
 
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
@@ -41,47 +41,47 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public abstract class ExoticScroll extends Scroll {
+public abstract class CursedScroll extends Scroll {
 	
 	
-	public static final LinkedHashMap<Class<?extends Scroll>, Class<?extends ExoticScroll>> regToExo = new LinkedHashMap<>();
-	public static final LinkedHashMap<Class<?extends ExoticScroll>, Class<?extends Scroll>> exoToReg = new LinkedHashMap<>();
+	public static final LinkedHashMap<Class<?extends Scroll>, Class<?extends CursedScroll>> regToExo = new LinkedHashMap<>();
+	public static final LinkedHashMap<Class<?extends CursedScroll>, Class<?extends Scroll>> exoToReg = new LinkedHashMap<>();
 	static{
-		regToExo.put(ScrollOfUpgrade.class, ScrollOfEnchantment.class);
-		exoToReg.put(ScrollOfEnchantment.class, ScrollOfUpgrade.class);
+		regToExo.put(ScrollOfUpgrade.class, ScrollOfDowngrade.class);
+		exoToReg.put(ScrollOfDowngrade.class, ScrollOfUpgrade.class);
 
-		regToExo.put(ScrollOfIdentify.class, ScrollOfDivination.class);
-		exoToReg.put(ScrollOfDivination.class, ScrollOfIdentify.class);
+		regToExo.put(ScrollOfIdentify.class, ScrollOfDisidentify.class);
+		exoToReg.put(ScrollOfDisidentify.class, ScrollOfIdentify.class);
 		
-		regToExo.put(ScrollOfRemoveCurse.class, ScrollOfAntiMagic.class);
-		exoToReg.put(ScrollOfAntiMagic.class, ScrollOfRemoveCurse.class);
+		regToExo.put(ScrollOfRemoveCurse.class, ScrollOfCurse.class);
+		exoToReg.put(ScrollOfCurse.class, ScrollOfRemoveCurse.class);
 
-		regToExo.put(ScrollOfMirrorImage.class, ScrollOfPrismaticImage.class);
-		exoToReg.put(ScrollOfPrismaticImage.class, ScrollOfMirrorImage.class);
+		regToExo.put(ScrollOfMirrorImage.class, ScrollOfPhantomReflection.class);
+		exoToReg.put(ScrollOfPhantomReflection.class, ScrollOfMirrorImage.class);
 
-		regToExo.put(ScrollOfRecharging.class, ScrollOfMysticalEnergy.class);
-		exoToReg.put(ScrollOfMysticalEnergy.class, ScrollOfRecharging.class);
+		regToExo.put(ScrollOfRecharging.class, ScrollOfDecharging.class);
+		exoToReg.put(ScrollOfDecharging.class, ScrollOfRecharging.class);
 
-		regToExo.put(ScrollOfTeleportation.class, ScrollOfPassage.class);
-		exoToReg.put(ScrollOfPassage.class, ScrollOfTeleportation.class);
+		regToExo.put(ScrollOfTeleportation.class, ScrollOfMisstep.class);
+		exoToReg.put(ScrollOfMisstep.class, ScrollOfTeleportation.class);
 
-		regToExo.put(ScrollOfLullaby.class, ScrollOfSirensSong.class);
-		exoToReg.put(ScrollOfSirensSong.class, ScrollOfLullaby.class);
+		regToExo.put(ScrollOfLullaby.class, ScrollOfNightmare.class);
+		exoToReg.put(ScrollOfNightmare.class, ScrollOfLullaby.class);
 
-		regToExo.put(ScrollOfMagicMapping.class, ScrollOfForesight.class);
-		exoToReg.put(ScrollOfForesight.class, ScrollOfMagicMapping.class);
+		regToExo.put(ScrollOfMagicMapping.class, ScrollOfForgetfullness.class);
+		exoToReg.put(ScrollOfForgetfullness.class, ScrollOfMagicMapping.class);
 
-		regToExo.put(ScrollOfRage.class, ScrollOfChallenge.class);
-		exoToReg.put(ScrollOfChallenge.class, ScrollOfRage.class);
+		regToExo.put(ScrollOfRage.class, ScrollOfMadness.class);
+		exoToReg.put(ScrollOfMadness.class, ScrollOfRage.class);
 
-		regToExo.put(ScrollOfRetribution.class, ScrollOfPsionicBlast.class);
-		exoToReg.put(ScrollOfPsionicBlast.class, ScrollOfRetribution.class);
+		regToExo.put(ScrollOfRetribution.class, ScrollOfBalance.class);
+		exoToReg.put(ScrollOfBalance.class, ScrollOfRetribution.class);
 		
-		regToExo.put(ScrollOfTerror.class, ScrollOfDread.class);
-		exoToReg.put(ScrollOfDread.class, ScrollOfTerror.class);
+		regToExo.put(ScrollOfTerror.class, ScrollOfHorror.class);
+		exoToReg.put(ScrollOfHorror.class, ScrollOfTerror.class);
 		
-		regToExo.put(ScrollOfTransmutation.class, ScrollOfMetamorphosis.class);
-		exoToReg.put(ScrollOfMetamorphosis.class, ScrollOfTransmutation.class);
+		regToExo.put(ScrollOfTransmutation.class, ScrollOfDegradation.class);
+		exoToReg.put(ScrollOfDegradation.class, ScrollOfTransmutation.class);
 	}
 	
 	@Override
