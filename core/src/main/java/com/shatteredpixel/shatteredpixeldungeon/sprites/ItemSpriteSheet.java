@@ -560,6 +560,24 @@ public class ItemSpriteSheet {
 		for (int i = EXOTIC_SCROLLS; i < EXOTIC_SCROLLS+16; i++)
 			assignItemRect(i, 15, 14);
 	}
+
+
+    private static final int CURSED_SCROLLS =                               xy(1, 26);  //16 slots
+    public static final int CURSED_KAUNAN   = CURSED_SCROLLS+0;
+    public static final int CURSED_SOWILO   = CURSED_SCROLLS+1;
+    public static final int CURSED_LAGUZ    = CURSED_SCROLLS+2;
+    public static final int CURSED_YNGVI    = CURSED_SCROLLS+3;
+    public static final int CURSED_GYFU     = CURSED_SCROLLS+4;
+    public static final int CURSED_RAIDO    = CURSED_SCROLLS+5;
+    public static final int CURSED_MANNAZ   = CURSED_SCROLLS+7;
+    public static final int CURSED_NAUDIZ   = CURSED_SCROLLS+8;
+    public static final int CURSED_BERKANAN = CURSED_SCROLLS+9;
+    public static final int CURSED_ODAL     = CURSED_SCROLLS+10;
+    public static final int CURSED_TIWAZ    = CURSED_SCROLLS+11;
+    static {
+        for (int i = CURSED_SCROLLS; i < CURSED_SCROLLS+16; i++)
+            assignItemRect(i, 15, 14);
+    }
 	
 	private static final int STONES             =                           xy(1, 21);  //16 slots
 	public static final int STONE_AGGRESSION    = STONES+0;
@@ -907,6 +925,34 @@ public class ItemSpriteSheet {
 			assignIconRect( SCROLL_DREAD,       5, 7 );
 			assignIconRect( SCROLL_METAMORPH,   7, 7 );
 		}
+
+        private static final int CURSED_SCROLLS =                            xy(1, 4);  //16 slots
+        public static final int SCROLL_DOWNGRADE  = CURSED_SCROLLS+0;
+        public static final int SCROLL_DISIDENTIFY = CURSED_SCROLLS+1;
+        public static final int SCROLL_CURSE= CURSED_SCROLLS+2;
+        public static final int SCROLL_PHANTIMG  = CURSED_SCROLLS+3;
+        public static final int SCROLL_DECHARGE = CURSED_SCROLLS+4;
+        public static final int SCROLL_MISSTEP  = CURSED_SCROLLS+5;
+        public static final int SCROLL_NIGHTMARE    = CURSED_SCROLLS+6;
+        public static final int SCROLL_FORGET= CURSED_SCROLLS+7;
+        public static final int SCROLL_MADNESS= CURSED_SCROLLS+8;
+        public static final int SCROLL_BALANCE = CURSED_SCROLLS+9;
+        public static final int SCROLL_HORROR    = CURSED_SCROLLS+10;
+        public static final int SCROLL_DEGRADE= CURSED_SCROLLS+11;
+        static {
+            assignIconRect( SCROLL_DOWNGRADE,     7, 7 );
+            assignIconRect( SCROLL_DISIDENTIFY,    7, 6 );
+            assignIconRect( SCROLL_CURSE,   7, 7 );
+            assignIconRect( SCROLL_PHANTIMG,     5, 7 );
+            assignIconRect( SCROLL_DECHARGE,    7, 5 );
+            assignIconRect( SCROLL_MISSTEP,     5, 7 );
+            assignIconRect( SCROLL_NIGHTMARE,       7, 6 );
+            assignIconRect( SCROLL_FORGET,   7, 5 );
+            assignIconRect( SCROLL_MADNESS,   7, 7 );
+            assignIconRect( SCROLL_BALANCE,    5, 6 );
+            assignIconRect( SCROLL_HORROR,       5, 7 );
+            assignIconRect( SCROLL_DEGRADE,   7, 7 );
+        }
 
 		                                                                                //16 free slots
 

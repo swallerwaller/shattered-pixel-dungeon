@@ -1,0 +1,316 @@
+[1mdiff --git a/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/CursedScroll.java b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/CursedScroll.java[m
+[1mnew file mode 100644[m
+[1mindex 000000000..a337eecd6[m
+[1m--- /dev/null[m
+[1m+++ b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/CursedScroll.java[m
+[36m@@ -0,0 +1,151 @@[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Pixel Dungeon[m
+[32m+[m[32m * Copyright (C) 2012-2015 Oleg Dolya[m
+[32m+[m[32m *[m
+[32m+[m[32m * Shattered Pixel Dungeon[m
+[32m+[m[32m * Copyright (C) 2014-2025 Evan Debenham[m
+[32m+[m[32m *[m
+[32m+[m[32m * This program is free software: you can redistribute it and/or modify[m
+[32m+[m[32m * it under the terms of the GNU General Public License as published by[m
+[32m+[m[32m * the Free Software Foundation, either version 3 of the License, or[m
+[32m+[m[32m * (at your option) any later version.[m
+[32m+[m[32m *[m
+[32m+[m[32m * This program is distributed in the hope that it will be useful,[m
+[32m+[m[32m * but WITHOUT ANY WARRANTY; without even the implied warranty of[m
+[32m+[m[32m * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the[m
+[32m+[m[32m * GNU General Public License for more details.[m
+[32m+[m[32m *[m
+[32m+[m[32m * You should have received a copy of the GNU General Public License[m
+[32m+[m[32m * along with this program.  If not, see <http://www.gnu.org/licenses/>[m
+[32m+[m[32m */[m
+[32m+[m
+[32m+[m[32mpackage com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;[m
+[32m+[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.Item;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.Recipe;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;[m
+[32m+[m[32mimport com.watabou.utils.Reflection;[m
+[32m+[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m[32mimport java.util.LinkedHashMap;[m
+[32m+[m
+[32m+[m[32mpublic abstract class ExoticScroll extends Scroll {[m
+[32m+[m[41m	[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic static final LinkedHashMap<Class<?extends Scroll>, Class<?extends ExoticScroll>> regToExo = new LinkedHashMap<>();[m
+[32m+[m	[32mpublic static final LinkedHashMap<Class<?extends ExoticScroll>, Class<?extends Scroll>> exoToReg = new LinkedHashMap<>();[m
+[32m+[m	[32mstatic{[m
+[32m+[m		[32mregToExo.put(ScrollOfUpgrade.class, ScrollOfEnchantment.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfEnchantment.class, ScrollOfUpgrade.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfIdentify.class, ScrollOfDivination.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfDivination.class, ScrollOfIdentify.class);[m
+[32m+[m[41m		[m
+[32m+[m		[32mregToExo.put(ScrollOfRemoveCurse.class, ScrollOfAntiMagic.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfAntiMagic.class, ScrollOfRemoveCurse.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfMirrorImage.class, ScrollOfPrismaticImage.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfPrismaticImage.class, ScrollOfMirrorImage.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfRecharging.class, ScrollOfMysticalEnergy.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfMysticalEnergy.class, ScrollOfRecharging.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfTeleportation.class, ScrollOfPassage.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfPassage.class, ScrollOfTeleportation.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfLullaby.class, ScrollOfSirensSong.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfSirensSong.class, ScrollOfLullaby.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfMagicMapping.class, ScrollOfForesight.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfForesight.class, ScrollOfMagicMapping.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfRage.class, ScrollOfChallenge.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfChallenge.class, ScrollOfRage.class);[m
+[32m+[m
+[32m+[m		[32mregToExo.put(ScrollOfRetribution.class, ScrollOfPsionicBlast.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfPsionicBlast.class, ScrollOfRetribution.class);[m
+[32m+[m[41m		[m
+[32m+[m		[32mregToExo.put(ScrollOfTerror.class, ScrollOfDread.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfDread.class, ScrollOfTerror.class);[m
+[32m+[m[41m		[m
+[32m+[m		[32mregToExo.put(ScrollOfTransmutation.class, ScrollOfMetamorphosis.class);[m
+[32m+[m		[32mexoToReg.put(ScrollOfMetamorphosis.class, ScrollOfTransmutation.class);[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mpublic boolean isKnown() {[m
+[32m+[m		[32mreturn anonymous || (handler != null && handler.isKnown( exoToReg.get(this.getClass()) ));[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mpublic void setKnown() {[m
+[32m+[m		[32mif (!isKnown()) {[m
+[32m+[m			[32mhandler.know(exoToReg.get(this.getClass()));[m
+[32m+[m			[32mupdateQuickslot();[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mpublic void reset() {[m
+[32m+[m		[32msuper.reset();[m
+[32m+[m		[32mif (handler != null && handler.contains(exoToReg.get(this.getClass()))) {[m
+[32m+[m			[32mimage = handler.image(exoToReg.get(this.getClass())) + 16;[m
+[32m+[m			[32mrune = handler.label(exoToReg.get(this.getClass()));[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32m//20 gold more than its none-exotic equivalent[m
+[32m+[m	[32mpublic int value() {[m
+[32m+[m		[32mreturn (Reflection.newInstance(exoToReg.get(getClass())).value() + 30) * quantity;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32m//6 more energy than its none-exotic equivalent[m
+[32m+[m	[32mpublic int energyVal() {[m
+[32m+[m		[32mreturn (Reflection.newInstance(exoToReg.get(getClass())).energyVal() + 6) * quantity;[m
+[32m+[m	[32m}[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic static class ScrollToExotic extends Recipe {[m
+[32m+[m[41m		[m
+[32m+[m		[32m@Override[m
+[32m+[m		[32mpublic boolean testIngredients(ArrayList<Item> ingredients) {[m
+[32m+[m			[32mif (ingredients.size() == 1 && regToExo.containsKey(ingredients.get(0).getClass())){[m
+[32m+[m				[32mreturn true;[m
+[32m+[m			[32m}[m
+[32m+[m
+[32m+[m			[32mreturn false;[m
+[32m+[m		[32m}[m
+[32m+[m[41m		[m
+[32m+[m		[32m@Override[m
+[32m+[m		[32mpublic int cost(ArrayList<Item> ingredients) {[m
+[32m+[m			[32mreturn 6;[m
+[32m+[m		[32m}[m
+[32m+[m[41m		[m
+[32m+[m		[32m@Override[m
+[32m+[m		[32mpublic Item brew(ArrayList<Item> ingredients) {[m
+[32m+[m			[32mfor (Item i : ingredients){[m
+[32m+[m				[32mi.quantity(i.quantity()-1);[m
+[32m+[m			[32m}[m
+[32m+[m
+[32m+[m			[32mreturn Reflection.newInstance(regToExo.get(ingredients.get(0).getClass()));[m
+[32m+[m		[32m}[m
+[32m+[m[41m		[m
+[32m+[m		[32m@Override[m
+[32m+[m		[32mpublic Item sampleOutput(ArrayList<Item> ingredients) {[m
+[32m+[m			[32mreturn Reflection.newInstance(regToExo.get(ingredients.get(0).getClass()));[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m[32m}[m
+[1mdiff --git a/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/ScrollOfBalance.java b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/ScrollOfBalance.java[m
+[1mnew file mode 100644[m
+[1mindex 000000000..9a871032e[m
+[1m--- /dev/null[m
+[1m+++ b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/ScrollOfBalance.java[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m[32mpackage com.shatteredpixel.shatteredpixeldungeon.items.scrolls.cursed;[m
+[32m+[m
+[32m+[m[32mpublic class ScrollOfBalance {[m
+[32m+[m[32m}[m
+[1mdiff --git a/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/ScrollOfCurse.java b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/ScrollOfCurse.java[m
+[1mnew file mode 100644[m
+[1mindex 000000000..3b30b4e26[m
+[1m--- /dev/null[m
+[1m+++ b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/scrolls/cursed/ScrollOfCurse.java[m
+[36m@@ -0,0 +1,164 @@[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Pixel Dungeon[m
+[32m+[m[32m * Copyright (C) 2012-2015 Oleg Dolya[m
+[32m+[m[32m *[m
+[32m+[m[32m * Shattered Pixel Dungeon[m
+[32m+[m[32m * Copyright (C) 2014-2025 Evan Debenham[m
+[32m+[m[32m *[m
+[32m+[m[32m * This program is free software: you can redistribute it and/or modify[m
+[32m+[m[32m * it under the terms of the GNU General Public License as published by[m
+[32m+[m[32m * the Free Software Foundation, either version 3 of the License, or[m
+[32m+[m[32m * (at your option) any later version.[m
+[32m+[m[32m *[m
+[32m+[m[32m * This program is distributed in the hope that it will be useful,[m
+[32m+[m[32m * but WITHOUT ANY WARRANTY; without even the implied warranty of[m
+[32m+[m[32m * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the[m
+[32m+[m[32m * GNU General Public License for more details.[m
+[32m+[m[32m *[m
+[32m+[m[32m * You should have received a copy of the GNU General Public License[m
+[32m+[m[32m * along with this program.  If not, see <http://www.gnu.org/licenses/>[m
+[32m+[m[32m */[m
+[32m+[m
+[32m+[m[32mpackage com.shatteredpixel.shatteredpixeldungeon.items.scrolls;[m
+[32m+[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.Assets;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.Badges;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.Dungeon;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.actors.Actor;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TormentedSpirit;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.effects.Flare;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.Item;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.messages.Messages;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;[m
+[32m+[m[32mimport com.shatteredpixel.shatteredpixeldungeon.utils.GLog;[m
+[32m+[m[32mimport com.watabou.noosa.audio.Sample;[m
+[32m+[m[32mimport com.watabou.utils.PathFinder;[m
+[32m+[m
+[32m+[m[32mpublic class ScrollOfRemoveCurse extends InventoryScroll {[m
+[32m+[m
+[32m+[m	[32m{[m
+[32m+[m		[32micon = ItemSpriteSheet.Icons.SCROLL_REMCURSE;[m
+[32m+[m		[32mpreferredBag = Belongings.Backpack.class;[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mpublic void doRead() {[m
+[32m+[m
+[32m+[m		[32mTormentedSpirit spirit = null;[m
+[32m+[m		[32mfor (int i : PathFinder.NEIGHBOURS8){[m
+[32m+[m			[32mif (Actor.findChar(curUser.pos+i) instanceof TormentedSpirit){[m
+[32m+[m				[32mspirit = (TormentedSpirit) Actor.findChar(curUser.pos+i);[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m		[32mif (spirit != null){[m
+[32m+[m			[32midentify();[m
+[32m+[m			[32mSample.INSTANCE.play( Assets.Sounds.READ );[m
+[32m+[m			[32mreadAnimation();[m
+[32m+[m
+[32m+[m			[32mnew Flare( 6, 32 ).show( curUser.sprite, 2f );[m
+[32m+[m
+[32m+[m			[32mif (curUser.buff(Degrade.class) != null) {[m
+[32m+[m				[32mDegrade.detach(curUser, Degrade.class);[m
+[32m+[m			[32m}[m
+[32m+[m
+[32m+[m			[32mdetach(curUser.belongings.backpack);[m
+[32m+[m			[32mGLog.p(Messages.get(this, "spirit"));[m
+[32m+[m			[32mspirit.cleanse();[m
+[32m+[m		[32m} else {[m
+[32m+[m			[32msuper.doRead();[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mprotected boolean usableOnItem(Item item) {[m
+[32m+[m		[32mreturn uncursable(item);[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic static boolean uncursable( Item item ){[m
+[32m+[m		[32mif (item.isEquipped(Dungeon.hero) && Dungeon.hero.buff(Degrade.class) != null) {[m
+[32m+[m			[32mreturn true;[m
+[32m+[m		[32m} if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){[m
+[32m+[m			[32mreturn true;[m
+[32m+[m		[32m} else if (item instanceof Weapon){[m
+[32m+[m			[32mreturn ((Weapon)item).hasCurseEnchant();[m
+[32m+[m		[32m} else if (item instanceof Armor){[m
+[32m+[m			[32mreturn ((Armor)item).hasCurseGlyph();[m
+[32m+[m		[32m} else {[m
+[32m+[m			[32mreturn false;[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m@Override[m
+[32m+[m	[32mprotected void onItemSelected(Item item) {[m
+[32m+[m		[32mnew Flare( 6, 32 ).show( curUser.sprite, 2f );[m
+[32m+[m
+[32m+[m		[32mboolean procced = uncurse( curUser, item );[m
+[32m+[m
+[32m+[m		[32mif (curUser.buff(Degrade.class) != null) {[m
+[32m+[m			[32mDegrade.detach(curUser, Degrade.class);[m
+[32m+[m			[32mprocced = true;[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m		[32mif (procced) {[m
+[32m+[m			[32mGLog.p( Messages.get(this, "cleansed") );[m
+[32m+[m		[32m} else {[m
+[32m+[m			[32mGLog.i( Messages.get(this, "not_cleansed") );[m
+[32m+[m		[32m}[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mpublic static boolean uncurse( Hero hero, Item... items ) {[m
+[32m+[m[41m		[m
+[32m+[m		[32mboolean procced = false;[m
+[32m+[m		[32mfor (Item item : items) {[m
+[32m+[m			[32mif (item != null) {[m
+[32m+[m				[32mitem.cursedKnown = true;[m
+[32m+[m				[32mif (item.cursed) {[m
+[32m+[m					[32mprocced = true;[m
+[32m+[m					[32mitem.cursed = false;[m
+[32m+[m				[32m}[m
+[32m+[m			[32m}[m
+[32m+[m			[32mif (item instanceof Weapon){[m
+[32m+[m				[32mWeapon w = (Weapon) item;[m
+[32m+[m				[32mif (w.hasCurseEnchant()){[m
+[32m+[m					[32mw.enchant(null);[m
+[32m+[m					[32mprocced = true;[m
+[32m+[m				[32m}[m
+[32m+[m			[32m}[m
+[32m+[m			[32mif (item instanceof Armor){[m
+[32m+[m				[32mArmor a = (Armor) item;[m
+[32m+[m				[32mif (a.hasCurseGlyph()){[m
+[32m+[m					[32ma.inscribe(null);[m
+[32m+[m					[32mprocced = true;[m
+[32m+[m				[32m}[m
+[32m+[m			[32m}[m
+[32m+[m			[32mif (item instanceof Wand){[m
+[32m+[m				[32m((W
