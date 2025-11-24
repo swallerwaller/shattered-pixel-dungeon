@@ -107,45 +107,15 @@ public abstract class CursedScroll extends Scroll {
 	}
 	
 	@Override
-	//20 gold more than its none-exotic equivalent
+	//30 gold less than its none-exotic equivalent
 	public int value() {
-		return (Reflection.newInstance(exoToReg.get(getClass())).value() + 30) * quantity;
+		return (Reflection.newInstance(exoToReg.get(getClass())).value() - 30) * quantity;
 	}
 
 	@Override
-	//6 more energy than its none-exotic equivalent
+	//2 less energy than its none-exotic equivalent
 	public int energyVal() {
-		return (Reflection.newInstance(exoToReg.get(getClass())).energyVal() + 6) * quantity;
+		return (Reflection.newInstance(exoToReg.get(getClass())).energyVal() - 2) * quantity;
 	}
-	
-	public static class ScrollToExotic extends Recipe {
-		
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() == 1 && regToExo.containsKey(ingredients.get(0).getClass())){
-				return true;
-			}
 
-			return false;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 6;
-		}
-		
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			for (Item i : ingredients){
-				i.quantity(i.quantity()-1);
-			}
-
-			return Reflection.newInstance(regToExo.get(ingredients.get(0).getClass()));
-		}
-		
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return Reflection.newInstance(regToExo.get(ingredients.get(0).getClass()));
-		}
-	}
 }
